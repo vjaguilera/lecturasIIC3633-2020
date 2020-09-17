@@ -1,0 +1,23 @@
+# Context-Aware Recommender Systems: Crítica y análisis
+
+Autor: Vicente Aguilera Yévenes
+
+Este paper trata sobre una nueva metodología de análisis para el problema de la recomendación, donde se introduce un nuevo componente: el contexto. Los autores se refieren a este tipo de sistemas como CARS (*Context Aware Recommender Systems*) y la gran diferencia que presentan es el uso del contexto, que agrega una nueva dimensión a la complejidad, transformando de manera general el problema de rating desde $U \times I \rightarrow R$ a $U\times I\times C \rightarrow R$.
+
+Para comenzar, creo que el *approach* que hacen los autores con este tipo de metodología es muy bueno y completamente cierto. Desde mi experiencia, es claro que hay variables más allá de la interacción y los items que llevan a que un usuario piense que una recomendación es buena, en mi caso escucho distintos tipos de estilos musicales dependiendo del contexto (Estudio, viaje, entrenamiento, etc.), y ese tipo de discriminación no se puede lograr con los recomendadores que hasta el momento se estudiaron (si se puede, pero no al mismo nivel).
+
+A grandes rasgos, creo que los autores presentan una introducción bastante completa de las definiciones y conceptos en los que se basan los CARS, por ejemplo, la definición de contexto, al diferenciación entre la perspectiva representacional y la de interacción, ayudan al lector a entender en marco en el que se trabaja con CARS.
+
+El paper no presenta un algoritmo en sí, ni tampoco una formulación matemáticamente compleja, si no que hace una revisión por los conceptos más relevantes de CARS, y muestra aplicaciones concretas de las distintas variantes en diferentes contexto. En este sentido, uno de los aportes más grandes que tienen los autores es la segmentación y categorización de los factores del contexto y del conocimiento del sistema con respecto a estos factores:
+
+<img src="img/factors_matrix.png" style="zoom: 50%;" />
+
+A pesar de que la mayoría del trabajo está enfocado en el registro (0,0) de esta matriz, los autores señalan que se puede trabajar sobre información contextual estática y no observable, utilizando técnicas que hemos visto a lo largo del curso, como *Factorización Matricial* que permite encontrar valores latentes que no son manipulables a simple vista.
+
+Otro aporte importante que hace el autor es la distinción entre los procesos de recomendación basados en contexto, que el usuario cataloga como *contextual prefiltering*, *contextual postfiltering, or contextual modeling*. De la mano con lo anterior, es rescatable que los primeros 2 tipos de procesos pueden (re)utilizar algoritmos clásicos de recomendación, agregando una capa de "filtro" en base al contexto, mientras que el último representa el desafío de generar un modelo completamente adaptado a la situación del contexto
+
+En cuanto a *Prefiltering* y *Postfiltering*, no me queda claro cómo se define la técnica de mapeo generalizado llevado a cabo por Adomavicius et al. (2005), transformando la data $c = (c_1, .. ,c_k)$ a $c' = (c_1', ... ,c_k')$ tal que $c_i \rightarrow c_i'$, ¿cómo se evita la perdida de información en el proceso de transformación? ¿cómo se hace para no entrar en generalidades que hagan perder precisión al modelo? Además, con respecto a los contexto *multivariables* (como el ejemplo `(Girlfriend, Theater, Saturday)`) ¿que ocurre cuando la combinación es inviable? (por ejemplo el clásico contexto `(Universidad, Ejercicio, Pololeo, Carrete)`).
+
+Creo que las aplicaciones prácticas que muestran los autores son bastante buenas para dejar en claro la aplicabilidad de los sistemas de recomendación basados en contenido, situación que es enriquecida por la segmentación de contextos que hacen los autores (física, social, de interacción media y modal), esto ayuda a que los ejemplos sean entendibles y llevados a la realidad del lector, por ejemplo, para entender por qué aplicaciones cotidianas responden tan bien a la tarea de recomendación.
+
+Finalmente, es claro que el trabajo en conjunto con los sistemas recolectores y orquestadores de datos es clave al momento de determinar el buen desempeño de un recomendador basado en contexto. Básicamente todo lo que circula a nuestro alrededor en la era digital está descrito por datos, que se traducen en un contexto que puede ser aplicado para la tarea de recomendar. Escapando un poco del scope del paper, las tecnologías IoT y la llegada del 5G a Chile significará un aumento significativo en la recolección de datos descriptores de contextos, que a su vez implican una oportunidad de inserción de este tipo de recomendadores, sobre todo en campos como la minería, agricultura y comercio. 
