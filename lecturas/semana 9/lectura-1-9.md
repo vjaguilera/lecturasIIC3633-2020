@@ -1,0 +1,15 @@
+# Multi-Armed Recommender System Bandit Ensembles: Crítica y análisis
+
+Autor: Vicente Aguilera Yévenes
+
+Este paper presenta una adaptación del *multi-armed bandit approach* empleado en la tarea de recomendación, de tal manera que se combinan sistemas como *arms* (de ahí el multi armed) y el *ensemble* como un *bandit* que en cada paso de la iteración o simulación (de la interacción de la recomendación con el usuario) selecciona uno de estos *arms* para producir la siguiente recomendación. Es un paper bastante innovador y entretenido porque, a diferencia de los demás papers que hemos leído, este se basa en un contexto simulado de interacción entre sistema y usuario, con pasos (interacciones) entre el sistema y el usuario, de tal forma que el sistema aprende, en base a incentivos del usuario, cual combinación de algoritmos debe utilizar para mejorar la calidad de la siguiente recomendación. Cada uno de los *arms* son las combinaciones de los sistemas y el *ensemble* es un *bandit* que selecciona uno de estos *arms*.
+
+Junto con lo anterior, encuentro que la forma de plantear el problema va muy de la mano con lo que se necesita en la práctica: un sistema que evolucione por medio de la interacción continua entre el output que genera y la evaluación de este por parte del usuario, como feedback para mejorar la calidad de las recomendaciones.
+
+En cuanto a la preparación del experimento, el hecho de que los algoritmos de los *arms* comiencen con la misma data de entrenamiento pero evolucionen a medida que avanza la simulación, ¿no introduce un cierto grado de sesgo o de diferenciación al momento de evaluar cada algoritmo?
+
+Con respecto a los resultados mismos, los autores explican un fenómeno bastante interesante, que tiene que ver con la popularidad que adquiere **MF** en el *ensemble* a pesar de que este tiene un rendimiento subóptimo para procesos de recomendación cíclico. Me sorprende que en un *ensemble* se pueda introducir bias aún cuando el proceso de armado es dirigido por el mismo *ensemble*.
+
+De la mano con lo anterior, es muy interesante el comportamiento que se da con respecto a las fases de recomendación: Al comienzo se opta por utilizar **Most popular**, pero luego se salta bruscamente a **MF**, permitiendo que **MF** tenga datos suficientes para sobrepasar el cold start, a pesar de que su rendimiento es subóptimo y sesgado.
+
+Con respecto a la cantidad de epochs utilizados en el experimento, creo que si bien esto puede ocurrir en otros contextos (como interacción con Youtube, Spotify, Redes sociales), dudo que MovieLens sea una fuente confiable para representar 200 interacciones por parte de los usuarios, siendo una plataforma de recomendación de películas. En este sentido, quizás un dataset más *ad hoc* a un contexto real (Netflix por ejemplo) hubiese sido mejor.
