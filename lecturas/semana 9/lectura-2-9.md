@@ -1,0 +1,25 @@
+# Carousel Personalization in Music Streaming Apps with Contextual Bandits: Crítica y análisis
+
+Autor: Vicente Aguilera Yévenes
+
+Este paper nos habla sobre una variante de aplicación a un sistema recomendador enfocado en la tarea de recomendar *playlists* para un *display* de tipo carrusel, con un 12 espacios para recomendar pero 3 recomendaciones inmediatamente visibles al usuario, quien por medio de *scrolling* puede ver las siguiente 9 recomendaciones, permitiendo de esta manera la captura de metadatos relacionados a la interacción con el sistema y la reacción del usuario a la recomendación del mismo.
+
+La innovación que presentan los autores es modelar la situación anteriormente descrita como un *contextual multi-armed bandit problem*, agregando *cascade-based updates* y *delayed batch feedback*. Aquí se pueden ver 3 elementos muy importantes que representan gran parte del aporte de los autores:
+
+- *Contextual multi-armed bandit problem*: La modelación del problema se hace aplicando estrategias de Reinforcement Learning, específicamente los *multi-armed bandits*, que es una especie de sistema que representa a un usuario con muchos brazos capaces de jugar en múltiples máquinas de casino, de tal manera que debe aprender a maximizar su ganancias apostándole a aquellas que representarán el mejor escenario, aprendiendo por medio de *rewards*.
+- *Cascade-based updates:* Este es un framework de trabajo aplicado por los autores que permite llevar a cabo analisis de experimentos, tal como su nombre lo menciona, las actualizaciones de valores se hacen en cascada
+- *Delayed batch feedback:* Los autores proponen entregar los rewards de las interacciones en *batches* por cada ronda, no de manera inmediata, lo que permitiría de cierta manera ser más precisos con el mundo real.
+
+En cuanto a los experimentos en sí, algo que llamó mucho mi atención fue el planteamiento de los autores por considerar aspectos contextuales dentro de la tarea de recomendación, en especial al categorizar el algoritmo como *semi-personalizado*, teniendo en consideración que la recomendación se le hace a un cluster de usuarios. Creo que es una buena medida auxiliar el disminuir la carga de la recomendación y del sistema, tomando como información previa una segmentación contextual de los usuarios, sin embargo el desempeño del recomendador dependerá de la calidad de los clusters formados. ¿No hay una forma de incorporar esta extracción de características contextuales como parte del recomendador?
+
+En la misma línea de lo anterior, *contextual multi-armed bandits* también es una buena medida, pero al igual que la contextualización por clusters, depende mucho de la calidad representativa del vector perfil previamente entregado, en este sentido ¿existe alguna forma de adaptar dinámicamente el perfil del usuario en función del rendimiento del recomendador?
+
+Siendo ya más quisquilloso, creo que la explicación del trabajo relacionado fue bastante pobre. No explica sobre aquellos papers que puede relacionarse, o que tomaron como inspiración o que presentan una línea investigativa interesante.
+
+En relación a la aplicación del recomendador en el ambiente simulado, hay un aspecto que llamó mucho mi atención y tiene que ver con como se plantearon los usuarios el *ground-truth* para la evaluación del sistema ¿como se sabe que la logistic regression es la mejor para estimar ese vector? Hubiese sido bueno comparar con otros métodos de estimación.
+
+Con respecto a los algoritmos empleados, primero destacar la amplia mayoría de algoritmos que permiten generar un entendimiento mayor de la mano de la variabilidad de estos algoritmos. Además, considero que es muy bueno que ocupen versiones *explore* y *exploit*.
+
+En cuanto a la aplicación del estudio y la obtención de resultados, ocurre algo muy intrigante: En el contexto de uso del algoritmo, se necesitó la mitad de la simulación para que *etc-seg* (y variantes) empezaran a obtener un performance competitivo, esto en la vida real puede no ser aplicable (requerir al menos 50 interacciones para obtener un resultado acorde es bastante en términos de requisitos de usuario). Al igual que antes, a pesar del buen y competitivo desempeño que tienen las metodologías de recomendación semi-personalizadas (en especial Thompson Sampling), son muy dependientes de la calidad del algoritmo de clustering subyacente.
+
+Es importante destacar la relevancia que tiene *delayed batch feedback* para los resultados. Es muy interesante el comportamiento adquirido al obtener los rewards de cada round por medio de batches. Como indican los autores, en cierto sentido este fenómeno se adapta las políticas estocásticas de los algoritmos como Thompson Sampling o e-greedy. Además, la situación anterior representa una fuerte diferencia en los algoritmos, donde aquellos algoritmos con mayor tendencia a la explotación  recomiendan lo mismo para todos los usuarios dentro de un mismo cluster, y aquellos más exploratorios, recomiendan contenido variado dentro del mismo cluster, afectando su desempeño.
